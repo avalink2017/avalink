@@ -1,0 +1,17 @@
+[project]
+name = "angular-frontend"
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[[services]]
+name = "web"
+httpPort = 80
+
+[services.env]
+NGINX_PORT = "80"
+
+# Health check configuration
+[services.healthCheckPath]
+web = "/"
