@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, model, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
@@ -22,6 +22,8 @@ export class Contact {
   config = inject(ConfigService);
   formBuilder = inject(FormBuilder);
   http = inject(HttpClient);
+
+  @ViewChild(Turstile) turnstile!: Turstile;
 
   siteKey?: string;
 
@@ -48,8 +50,17 @@ export class Contact {
   });
 
   onCaptchaResolved(token: string | null | undefined) {
-    if(token)
-      this.turnstileToken = token;    
+    if (token) this.turnstileToken = token;
+  }
+
+  onExpired() {
+    this.hasExpired = true;
+  }
+
+  hasExpired = false;
+  onReset() {
+    this.turnstile.onReset();
+    this.hasExpired = false;
   }
 
   onSubmit() {
@@ -66,7 +77,7 @@ export class Contact {
       this.isSubmiting = true;
       this.controlsSubmitingState(true);
       this.http
-        .post(url, payload, {          
+        .post(url, payload, {
           headers: { 'X-AVALINK-KEY': this.config.apiKey },
         })
         .pipe(
@@ -79,7 +90,11 @@ export class Contact {
             this.isSubmiting = false;
             this.turnstileToken = null;
 
-            Swal.fire('Contacto', 'Mensaje enviado correctamente, uno de nuestros acesores se pondrá en contacto contigo.', 'success');
+            Swal.fire(
+              'Contacto',
+              'Mensaje enviado correctamente, uno de nuestros acesores se pondrá en contacto contigo.',
+              'success'
+            );
 
             this.fg.reset();
           },

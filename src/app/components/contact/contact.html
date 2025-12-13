@@ -59,13 +59,21 @@
     </div>
 
     <div>
-        <app-turstile [siteKey]="siteKey!" (resolved)="onCaptchaResolved($event)"/>
-    </div> 
+      <app-turstile
+        [siteKey]="siteKey!"
+        (resolved)="onCaptchaResolved($event)"
+      />
+      @if(hasExpired){
+      <button type="button" class="reset-button" (click)="onReset()">
+        Refrescar
+      </button>
+      }
+    </div>
 
     <button
       type="submit"
       class="btn-primary"
-      style="width: 100%; margin-top: 1rem;"
+      style="width: 100%; margin-top: 1rem"
       [disabled]="!fg.valid && turnstileToken !== null"
     >
       Enviar Mensaje

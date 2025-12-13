@@ -4,6 +4,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  model,
   OnDestroy,
   Output,
   ViewChild,
@@ -19,19 +20,27 @@ export class Turstile implements AfterViewInit, OnDestroy {
 
   @Input() siteKey: string = 'TU_SITE_KEY_AQUI';
   @Output() resolved = new EventEmitter<string | null | undefined>();
+  @Output() expired = new EventEmitter<void>()  
 
   private widgetId: string | null = null;
 
+  ts?:any
+
   ngAfterViewInit() {
     this.renderWidget();
+  }  
+
+  onReset(){
+    if(this.widgetId && this.ts)
+      this.ts.reset(this.widgetId)
   }
 
   renderWidget() {
     // Accedemos al objeto global de window
-    const ts = (window as any).turnstile;
+    this.ts = (window as any).turnstile;
 
-    if (ts) {
-      this.widgetId = ts.render(this.container.nativeElement, {
+    if (this.ts) {
+      this.widgetId = this.ts.render(this.container.nativeElement, {
         sitekey: this.siteKey,
         callback: (token: string) => {
           this.resolved.emit(token);
@@ -40,7 +49,7 @@ export class Turstile implements AfterViewInit, OnDestroy {
           //this.resolved.emit(null);
         },
         'expired-callback': () => {
-          //this.resolved.emit(null);
+          this.expired.emit();
         },
         'refresh-expired': 'never',
         'refresh-timeout': 'never',
