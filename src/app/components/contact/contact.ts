@@ -54,6 +54,7 @@ export class Contact {
   }
 
   onExpired() {
+    console.log('Expired');
     this.hasExpired = true;
   }
 
