@@ -10,8 +10,7 @@ import {
 import { ConfigService } from '../../core/services/config.service';
 import Swal from 'sweetalert2';
 import { finalize } from 'rxjs';
-import { Turstile } from "../turstile/turstile";
-
+import { Turstile } from '../turstile/turstile';
 
 @Component({
   selector: 'app-contact',
@@ -50,7 +49,7 @@ export class Contact {
 
   onCaptchaResolved(token: string | null) {
     this.turnstileToken = token;
-    console.log(token)
+    console.log(token);
   }
 
   onSubmit() {
@@ -68,6 +67,7 @@ export class Contact {
       this.controlsSubmitingState(true);
       this.http
         .post(url, payload, {
+          withCredentials: true,
           headers: { 'X-AVALINK-KEY': this.config.apiKey },
         })
         .pipe(
