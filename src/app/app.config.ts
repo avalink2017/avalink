@@ -23,11 +23,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withFetch(),
-      withInterceptorsFromDi(),
-      withXsrfConfiguration({
-        cookieName: 'XSRF-TOKEN',
-        headerName: 'X-XSRF-TOKEN',
-      })
+      withInterceptorsFromDi()      
     ),
     provideAppInitializer(async () => {
       const config = inject(ConfigService);

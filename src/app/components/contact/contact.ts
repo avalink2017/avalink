@@ -66,8 +66,7 @@ export class Contact {
       this.isSubmiting = true;
       this.controlsSubmitingState(true);
       this.http
-        .post(url, payload, {
-          withCredentials: true,
+        .post(url, payload, {          
           headers: { 'X-AVALINK-KEY': this.config.apiKey },
         })
         .pipe(
