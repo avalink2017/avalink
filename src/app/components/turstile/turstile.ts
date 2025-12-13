@@ -18,7 +18,7 @@ export class Turstile implements AfterViewInit, OnDestroy {
   @ViewChild('turnstileContainer') container!: ElementRef;
 
   @Input() siteKey: string = 'TU_SITE_KEY_AQUI';
-  @Output() resolved = new EventEmitter<string | null>();
+  @Output() resolved = new EventEmitter<string | null | undefined>();
 
   private widgetId: string | null = null;
 
@@ -37,11 +37,13 @@ export class Turstile implements AfterViewInit, OnDestroy {
           this.resolved.emit(token);
         },
         'error-callback': () => {
-          this.resolved.emit(null);
+          //this.resolved.emit(null);
         },
         'expired-callback': () => {
-          this.resolved.emit(null);
+          //this.resolved.emit(null);
         },
+        'refresh-expired': 'never',
+        'refresh-timeout': 'never',
       });
     }
   }

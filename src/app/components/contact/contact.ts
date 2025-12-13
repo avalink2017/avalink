@@ -48,8 +48,8 @@ export class Contact {
   });
 
   onCaptchaResolved(token: string | null) {
-    this.turnstileToken = token;
-    console.log(token);
+    if(token)
+      this.turnstileToken = token;    
   }
 
   onSubmit() {
