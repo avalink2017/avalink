@@ -48,6 +48,10 @@ export class Turstile implements AfterViewInit, OnDestroy {
         'error-callback': () => {
           //this.resolved.emit(null);
         },
+        'timeout-callback': () => {
+          console.log('TimeOut Turstile');
+          this.expired.emit();
+        },
         'expired-callback': () => {
           console.log('Expired Turstile')
           this.expired.emit();
