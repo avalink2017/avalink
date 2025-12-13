@@ -62,6 +62,7 @@
       <app-turstile
         [siteKey]="siteKey!"
         (resolved)="onCaptchaResolved($event)"
+        (expired)="onExpired()"
       />
       @if(hasExpired){
       <button type="button" class="reset-button" (click)="onReset()">
