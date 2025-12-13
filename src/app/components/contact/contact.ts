@@ -47,7 +47,7 @@ export class Contact {
     message: ['', Validators.required],
   });
 
-  onCaptchaResolved(token: string | null) {
+  onCaptchaResolved(token: string | null | undefined) {
     if(token)
       this.turnstileToken = token;    
   }
@@ -80,6 +80,8 @@ export class Contact {
             this.turnstileToken = null;
 
             Swal.fire('Contacto', 'Mensaje enviado correctamente', 'success');
+
+            this.fg.reset();
           },
           error: (err) => {
             this.isSubmiting = false;
