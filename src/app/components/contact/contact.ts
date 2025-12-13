@@ -79,7 +79,7 @@ export class Contact {
             this.isSubmiting = false;
             this.turnstileToken = null;
 
-            Swal.fire('Contacto', 'Mensaje enviado correctamente', 'success');
+            Swal.fire('Contacto', 'Mensaje enviado correctamente, uno de nuestros acesores se pondrá en contacto contigo.', 'success');
 
             this.fg.reset();
           },
