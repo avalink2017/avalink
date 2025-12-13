@@ -73,7 +73,7 @@ nav a:hover {
   color: var(--accent-color);
 }
 
-.btn-primary {
+.btn-primary:not(:disabled) {
   background-color: var(--accent-color);
   color: white;
   padding: 0.6rem 1.5rem;
@@ -84,7 +84,16 @@ nav a:hover {
   display: inline-block;
 }
 
-.btn-primary:hover {
+.btn-primary:disabled{
+  color: rgb(190, 189, 189);
+  padding: 0.6rem 1.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  border: none;  
+  display: inline-block;
+}
+
+.btn-primary:not(:disabled):hover {
   background-color: var(--accent-hover);
   transform: translateY(-2px);
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
@@ -274,6 +283,15 @@ section {
   background-color: #1e293b;
   color: white;
   font-family: inherit;
+}
+
+input.ng-invalid, select.ng-invalid, textarea.ng-invalid{
+  border: 1px solid #ad3434 !important;
+}
+
+.required-field{
+  font-size: .8rem;
+  color:#ad3434;
 }
 
 .form-group input:focus,
