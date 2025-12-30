@@ -34,7 +34,8 @@ export class Contact {
   turnstileToken: string | null = null;
 
   constructor() {
-    this.siteKey = this.env.turnstileKey;    
+    this.siteKey = this.env.turnstileKey;       
+    console.log(this.env) 
   }
 
   fg = this.formBuilder.group({
