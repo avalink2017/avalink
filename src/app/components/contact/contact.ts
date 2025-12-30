@@ -1,16 +1,18 @@
 import { NgClass } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, model, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ConfigService } from '../../core/services/config.service';
+
 import Swal from 'sweetalert2';
 import { finalize } from 'rxjs';
 import { Turstile } from '../turstile/turstile';
+import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-contact',
@@ -19,7 +21,8 @@ import { Turstile } from '../turstile/turstile';
   styleUrl: './contact.scss',
 })
 export class Contact {
-  config = inject(ConfigService);
+  env = environment;
+
   formBuilder = inject(FormBuilder);
   http = inject(HttpClient);
 
@@ -31,15 +34,7 @@ export class Contact {
   turnstileToken: string | null = null;
 
   constructor() {
-    this.siteKey = this.config.turnsTile;
-  }
-
-  private buildUrl(endpoint: string): string {
-    const base = this.config.apiUrl.endsWith('/')
-      ? this.config.apiUrl.slice(0, -1)
-      : this.config.apiUrl;
-    const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-    return `${base}${path}`;
+    this.siteKey = this.env.turnstileKey;    
   }
 
   fg = this.formBuilder.group({
@@ -66,7 +61,7 @@ export class Contact {
 
   onSubmit() {
     if (this.fg.valid) {
-      const url = this.buildUrl('resend/contact');
+      const url = `${this.env.apiUrl}/resend/contact`; 
 
       const dto = this.fg.getRawValue();
 
@@ -79,7 +74,7 @@ export class Contact {
       this.controlsSubmitingState(true);
       this.http
         .post(url, payload, {
-          headers: { 'X-AVALINK-KEY': this.config.apiKey },
+          headers: { 'X-AVALINK-KEY': this.env.apiKey! },
         })
         .pipe(
           finalize(() => {

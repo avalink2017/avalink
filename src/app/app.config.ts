@@ -11,10 +11,9 @@ import { routes } from './app.routes';
 import {
   provideHttpClient,
   withFetch,
-  withInterceptorsFromDi,
-  withXsrfConfiguration,
+  withInterceptorsFromDi,  
 } from '@angular/common/http';
-import { ConfigService } from './core/services/config.service';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,10 +23,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withFetch(),
       withInterceptorsFromDi()      
-    ),
-    provideAppInitializer(async () => {
-      const config = inject(ConfigService);
-      await config.load();
-    }),
+    ),    
   ],
 };
